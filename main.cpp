@@ -4,11 +4,6 @@
 
 using namespace std;
 
-
-
-
-string input;
-
 string clean_string (string input) {
     string res;
     for (int i = 0; i < input.length(); i++) {
@@ -18,10 +13,37 @@ string clean_string (string input) {
     return res;
 }
 
-int ctoi (char c) { return (int) c - '0'; };
+int ctoi (char c) { return (int) (c - '0'); };
 
 int evaluator (string equation) {
-    vector<char> val;
+    vector<int> val;
+
+    for (int i = 0; i < equation.length(); i++) {
+        if (equation[i] >= '0' && equation[i] <= '9')
+            val.push_back(ctoi(equation[i]));
+        else {
+            int b = val.back();
+            val.pop_back();
+            int a = val.back();
+            val.pop_back();
+            switch (equation[i]) {
+                case '+' :
+                    val.push_back(a + b);
+                    break;
+                case '*' :
+                    val.push_back(a * b);
+                    break;
+                case '-' :
+                    val.push_back(a - b);
+                    break;
+                case '/' :
+                    val.push_back(a / b);
+                    break;
+            }
+        }  
+    }
+
+    return val.back();
 }
 
 string format (string input) {
@@ -29,9 +51,8 @@ string format (string input) {
     string art = clean_string(input);
     if (art.length() == 1)
         return input;
-    cout << "to be formatted : " << art << '\n';
+    //cout << "to be formatted : " << art << '\n';
     string res;
-    vector<char> val;
     vector<char> op;
 
     int op_state = 0;
@@ -49,8 +70,10 @@ string format (string input) {
                 lefbr = 0;
                 rigbr = 0;
                 br = "";
-                if (op.size() != 0)
-                     res.push_back(op.back());
+                if (op.size() != 0) {
+                    res.push_back(op.back());
+                    op.pop_back();
+                }
             } else {
                 if(art[i] == '(') {
                      op_state = 2;
@@ -92,10 +115,16 @@ string format (string input) {
 
 int main() {
 
-    do {
-        cout << "[math]> ";
+    string input;
+
+    cout << "[Your Input]> $ ";
+    getline(cin, input);
+    while(input != "exit") {
+        cout << "postfix format : " << format (input) << '\n';
+        cout << "result       : " << evaluator(format(input)) << '\n';
+        cout << "[Your Input]> $ ";
         getline(cin, input);
-        cout <<  format (input) << '\n';
-    } while (input != "exit");
-    //input = "(1 * (2 - 2)) + (1 - 3) * 2";
+    }
+
+    return 0;
 }
