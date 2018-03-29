@@ -120,8 +120,10 @@ int main() {
     cout << "[Your Input]> $ ";
     getline(cin, input);
     while(input != "exit") {
-        cout << "postfix format : " << format (input) << '\n';
-        cout << "result       : " << evaluator(format(input)) << '\n';
+        if(input.length() != 0) {
+            cout << "   postfix format  : " << format (input) << '\n';
+            cout << "   result          : " << evaluator(format(input)) << '\n';
+        }
         cout << "[Your Input]> $ ";
         getline(cin, input);
     }
