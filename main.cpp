@@ -18,10 +18,18 @@ string clean_string (string input) {
     return res;
 }
 
+int ctoi (char c) { return (int) c - '0'; };
+
+int evaluator (string equation) {
+    vector<char> val;
+}
+
 string format (string input) {
 
     string art = clean_string(input);
-    cout << "to be formatted" << art << '\n';
+    if (art.length() == 1)
+        return input;
+    cout << "to be formatted : " << art << '\n';
     string res;
     vector<char> val;
     vector<char> op;
@@ -32,11 +40,7 @@ string format (string input) {
     int rigbr = 0;
     string br = "";
 
-    for (int i = 0; i < art.length(); i++) {
-        cout << "current input" << art[i] << '\n';
-        cout << "current res : " << res << '\n';
-        cout << "current br : " << br << "\n\n";
-
+    for (int i = 0; i < art.length() || br != ""; i++) {
 
         if (op_state == 2) {   
             if (rigbr == lefbr && lefbr != 0) {
@@ -45,6 +49,8 @@ string format (string input) {
                 lefbr = 0;
                 rigbr = 0;
                 br = "";
+                if (op.size() != 0)
+                     res.push_back(op.back());
             } else {
                 if(art[i] == '(') {
                      op_state = 2;
@@ -78,18 +84,18 @@ string format (string input) {
                 op_state = 0;
             }   
         }
-  
+    
     }
     return res;
 }
 
 
 int main() {
-    //cin >> art;
-    input = "(1 * 2) + (2 + 2) + 3";
 
-    
-    cout << format (input);
-
-
+    do {
+        cout << "[math]> ";
+        getline(cin, input);
+        cout <<  format (input) << '\n';
+    } while (input != "exit");
+    //input = "(1 * (2 - 2)) + (1 - 3) * 2";
 }
