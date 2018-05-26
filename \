@@ -17,15 +17,10 @@ int ctoi (char c) { return (int) (c - '0'); };
 
 int evaluator (string equation) {
     vector<int> val;
+    cout << equation << '\n';
     for (int i = 0; i < equation.length(); i++) {
-	int num = 0;
-        if (equation[i] >= '0' && equation[i] <= '9'){
-			while (equation[i] >= '0' && equation[i] <= '9') {
-			num = (num * 10) + ctoi(equation[i]);
-			i++;
-		}
-            	val.push_back(num);
-	}
+        if (equation[i] >= '0' && equation[i] <= '9')
+            val.push_back(ctoi(equation[i]));
         else {
             int b = val.back();
             val.pop_back();
@@ -108,14 +103,7 @@ string format (string input) {
                 op_state = 1;
             }
             else {
-		string num ;
-		while ((art[i] >= '0' && art[i] <= '9') && i + 1 <= art.length()) {
-			num += art[i];
-			i++;
-		}
-		i--;
-		num += " ";
-                res += num;
+                res.push_back(art[i]);
                 if ( op_state == 1) {
                     res.push_back(op.back());
                     op.pop_back();
