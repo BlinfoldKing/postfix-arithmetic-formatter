@@ -37,8 +37,13 @@ int evaluator (string equation) {
                     val.push_back(a - b);
                     break;
                 case '/' :
-                    val.push_back(a / b);
-                    break;
+		    if (b != 0)
+                    	val.push_back(a / b);
+		    else {
+		    	cout << "ERROR: DIVISION BY 0\nERROR CODE: ";
+			return -999;
+		    }
+		    break;
             }
         }  
     }
@@ -51,7 +56,6 @@ string format (string input) {
     string art = clean_string(input);
     if (art.length() == 1)
         return input;
-    //cout << "to be formatted : " << art << '\n';
     string res;
     vector<char> op;
 
